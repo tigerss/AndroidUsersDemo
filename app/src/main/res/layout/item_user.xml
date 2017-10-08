@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/item_user_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/user_placeholder"/>
+
+    <TextView
+        android:id="@+id/item_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_user_avatar"
+        android:text="name"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@id/item_user_avatar"
+        android:layout_below="@id/item_user_name">
+
+        <TextView
+            android:id="@+id/item_user_years_old"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="28"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="years from"/>
+
+        <TextView
+            android:id="@+id/item_user_country_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="UK"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/item_user_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="15:38"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_toLeftOf="@id/item_user_time"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_attachment_black_24dp"
+        android:tint="#9E9E9E"/>
+
+    <ToggleButton
+        android:id="@+id/item_user_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/item_user_time"
+        android:background="@null"
+        android:drawableRight="@drawable/check"
+        android:layout_margin="0dp"
+        android:textOn=""
+        android:textOff=""
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+</RelativeLayout>

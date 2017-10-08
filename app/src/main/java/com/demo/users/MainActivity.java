@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.demo.users.api.ServiceGenerator;
 import com.demo.users.api.User;
 import com.demo.users.api.UsersResponse;
+
+import net.danlew.android.joda.JodaTimeAndroid;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        JodaTimeAndroid.init(this);
+
         RecyclerView usersList = findViewById(R.id.main_users_recycler_view);
 
         mUsers = new ArrayList<>();
@@ -60,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadNextUsersPage(final int pageOffset) {
         Log.d(TAG, "loadNextUsersPage: " + pageOffset);
+        showToast("loadNextUsersPage: " + pageOffset);
 
         Call<UsersResponse> call = mApiService.getUsers(
                 pageOffset,
@@ -86,9 +92,12 @@ public class MainActivity extends AppCompatActivity {
                 addMoreUsersToList(usersResponse.results);
             } else {
                 try {
-                    Log.d(TAG, response.errorBody().string());
+                    final String errorMessage = response.errorBody().string();
+                    Log.d(TAG, errorMessage);
+                    showToast(errorMessage);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, e.getMessage(), e);
+                    showToast(e.getMessage());
                 }
             }
         }
@@ -96,6 +105,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onFailure(Call<UsersResponse> call, Throwable t) {
             Log.e(TAG, t.getMessage(), t);
+            showToast(t.getMessage());
         }
     };
+
+    private void showToast(final String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG)
+                .show();
+    }
 }

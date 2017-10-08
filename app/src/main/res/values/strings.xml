@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">UsersDemo</string>
+    <string name="years_from">years from</string>
 </resources>

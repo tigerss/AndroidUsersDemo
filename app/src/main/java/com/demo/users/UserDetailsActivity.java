@@ -129,6 +129,17 @@ public class UserDetailsActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Log.d(TAG, "on address clicked");
+
+            final String destination = Uri.encode(
+                    // use only city because google maps has problems finding addresses from randomuser.me
+//                    mUser.location.street + "," +
+                            mUser.location.city);
+            Intent intent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.google.com/maps/dir/?api=1&destination="
+                        + destination + "&travelmode=driving")
+            );
+            startActivity(intent);
         }
     };
 }

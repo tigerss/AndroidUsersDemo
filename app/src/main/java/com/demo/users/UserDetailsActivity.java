@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -123,6 +124,20 @@ public class UserDetailsActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Log.d(TAG, "on email clicked");
+
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{ mUser.email });
+            i.putExtra(Intent.EXTRA_SUBJECT, "subject");
+            try {
+                startActivity(Intent.createChooser(i, "Send mail..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(
+                        UserDetailsActivity.this,
+                        "There are no email clients installed.",
+                        Toast.LENGTH_SHORT)
+                    .show();
+            }
         }
     };
     private View.OnClickListener onAddressClickListener = new View.OnClickListener() {

@@ -4,4 +4,7 @@
     <string name="phone">Phone</string>
     <string name="email">Email</string>
     <string name="address">Address</string>
+    <string name="favorite">favorite</string>
+    <string name="edit">edit</string>
+    <string name="remove">remove</string>
 </resources>

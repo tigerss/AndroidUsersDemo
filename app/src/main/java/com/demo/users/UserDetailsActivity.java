@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +43,12 @@ public class UserDetailsActivity extends AppCompatActivity {
         refreshUserFields(mUser);
 
         loadUserAvatar();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_user_details, menu);
+        return true;
     }
 
     private void setUpToolbar() {

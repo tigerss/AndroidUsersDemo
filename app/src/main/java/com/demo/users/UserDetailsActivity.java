@@ -1,10 +1,14 @@
 package com.demo.users;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +20,8 @@ import com.demo.users.api.User;
 import java.io.Serializable;
 
 public class UserDetailsActivity extends AppCompatActivity {
+
+    private static final String TAG = "UserDetailsActivity";
 
     private ImageView mAvatarImageView;
     private TextView mNameTextView;
@@ -75,6 +81,10 @@ public class UserDetailsActivity extends AppCompatActivity {
         mEmailTextView = findViewById(R.id.user_details_email);
         mAddressTextView = findViewById(R.id.user_details_address);
         mUserIdTextView = findViewById(R.id.user_details_id);
+
+        findViewById(R.id.user_details_card_phone).setOnClickListener(onPhoneClickListener);
+        findViewById(R.id.user_details_card_email).setOnClickListener(onEmailClickListener);
+        findViewById(R.id.user_details_card_address).setOnClickListener(onAddressClickListener);
     }
 
     private void refreshUserFields(final User user) {
@@ -97,4 +107,28 @@ public class UserDetailsActivity extends AppCompatActivity {
                 .apply(options)
                 .into(mAvatarImageView);
     }
+
+    private View.OnClickListener onPhoneClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.d(TAG, "on phone clicked");
+
+            Intent intent = new Intent(
+                    Intent.ACTION_DIAL,
+                    Uri.fromParts("tel", mUser.phone, null));
+            startActivity(intent);
+        }
+    };
+    private View.OnClickListener onEmailClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.d(TAG, "on email clicked");
+        }
+    };
+    private View.OnClickListener onAddressClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.d(TAG, "on address clicked");
+        }
+    };
 }

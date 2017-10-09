@@ -24,7 +24,7 @@
         android:minHeight="70dp"
         android:background="@color/colorPrimary">
 
-        <ImageView
+        <com.demo.users.ScalableImageView
             android:id="@+id/user_details_avatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -122,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_call_black_24dp"
+                    android:src="@drawable/ic_email_black_24dp"
                     android:tint="@color/colorPrimary"/>
 
                 <TextView
@@ -173,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_call_black_24dp"
+                    android:src="@drawable/ic_location_on_black_24dp"
                     android:tint="@color/colorPrimary"/>
 
                 <TextView

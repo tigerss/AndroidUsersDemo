@@ -45,6 +45,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="UK"/>
+
+        <ImageView
+            android:id="@+id/item_user_flag"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/user_placeholder"/>
     </LinearLayout>
 
     <TextView

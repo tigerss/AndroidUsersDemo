@@ -37,6 +37,7 @@ public class UsersAdapter extends
         public TextView ageTextView;
         public TextView countryCodeTextView;
         public TextView time;
+        public ImageView flag;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -50,6 +51,7 @@ public class UsersAdapter extends
             ageTextView = itemView.findViewById(R.id.item_user_age);
             countryCodeTextView = itemView.findViewById(R.id.item_user_country_code);
             time = itemView.findViewById(R.id.item_user_time);
+            flag = itemView.findViewById(R.id.item_user_flag);
         }
     }
 
@@ -81,7 +83,6 @@ public class UsersAdapter extends
 
         // Inflate the custom layout
         View userRowView = inflater.inflate(R.layout.item_user, parent, false);
-
 
         // Return a new holder instance
         final ViewHolder viewHolder = new ViewHolder(userRowView);
@@ -133,6 +134,15 @@ public class UsersAdapter extends
                         randomColor
                 );
 
+        loadUserAvatar(viewHolder, user, placeholder);
+
+//        http://www.geognos.com/api/en/countries/flag/ES.png
+        Glide.with(getContext())
+                .load("http://www.geognos.com/api/en/countries/flag/" + user.nat + ".png")
+                .into(viewHolder.flag);
+    }
+
+    private void loadUserAvatar(ViewHolder viewHolder, User user, TextDrawable placeholder) {
         RequestOptions options = new RequestOptions()
                 .placeholder(placeholder)
                 .transform(new CircleCrop());

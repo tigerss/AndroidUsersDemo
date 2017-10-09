@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">UsersDemo</string>
     <string name="years_from">years from</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
 </resources>

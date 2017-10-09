@@ -1,10 +1,12 @@
 package com.demo.users;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.demo.users.api.ServiceGenerator;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView usersList = findViewById(R.id.main_users_recycler_view);
 
         mUsers = new ArrayList<>();
-        mUsersAdapter = new UsersAdapter(this, mUsers);
+        mUsersAdapter = new UsersAdapter(this, mUsers, onUserClickListener);
         usersList.setAdapter(mUsersAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -106,6 +108,18 @@ public class MainActivity extends AppCompatActivity {
         public void onFailure(Call<UsersResponse> call, Throwable t) {
             Log.e(TAG, t.getMessage(), t);
             showToast(t.getMessage());
+        }
+    };
+
+    private final UsersAdapter.OnUserClickListener onUserClickListener = new UsersAdapter.OnUserClickListener() {
+        @Override
+        public void onClick(View view, int position) {
+            User selected = mUsers.get(position);
+            Log.d(TAG, "Clicked " + selected.name.first);
+
+            Intent userDetailsIntent = new Intent(MainActivity.this, UserDetailsActivity.class);
+            userDetailsIntent.putExtra("user", selected);
+            MainActivity.this.startActivity(userDetailsIntent);
         }
     };
 

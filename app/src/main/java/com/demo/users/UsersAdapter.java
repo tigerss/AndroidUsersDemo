@@ -24,6 +24,10 @@ import java.util.List;
 public class UsersAdapter extends
         RecyclerView.Adapter<UsersAdapter.ViewHolder> {
 
+    public interface OnUserClickListener {
+        void onClick(View view, int position);
+    }
+
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,18 +53,17 @@ public class UsersAdapter extends
         }
     }
 
-    // Store a member variable for the contacts
     private List<User> mUsers;
-    // Store the context for easy access
     private Context mContext;
+    private OnUserClickListener mListener;
 
     // Used for computing age
     private DateTime today;
 
-    // Pass in the contact array into the constructor
-    public UsersAdapter(Context context, List<User> contacts) {
-        mUsers = contacts;
+    public UsersAdapter(Context context, List<User> users, OnUserClickListener listener) {
+        mUsers = users;
         mContext = context;
+        mListener = listener;
 
         today = new DateTime();
     }
@@ -79,8 +82,21 @@ public class UsersAdapter extends
         // Inflate the custom layout
         View userRowView = inflater.inflate(R.layout.item_user, parent, false);
 
+
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(userRowView);
+        final ViewHolder viewHolder = new ViewHolder(userRowView);
+
+        // Setup click listener
+        userRowView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (null != mListener) {
+                    mListener.onClick(view, viewHolder.getLayoutPosition());
+                }
+            }
+        });
+
         return viewHolder;
     }
 
@@ -90,8 +106,8 @@ public class UsersAdapter extends
         User user = mUsers.get(position);
 
         // Set item views based on your views and data model
-        final String firstName = capitalizeFirstLetter(user.name.first);
-        final String lastName = capitalizeFirstLetter(user.name.last);
+        final String firstName = Utils.capitalizeFirstLetter(user.name.first);
+        final String lastName = Utils.capitalizeFirstLetter(user.name.last);
         TextView textView = viewHolder.nameTextView;
         textView.setText(firstName + " " + lastName);
 
@@ -130,12 +146,5 @@ public class UsersAdapter extends
     @Override
     public int getItemCount() {
         return mUsers.size();
-    }
-
-    public String capitalizeFirstLetter(String original) {
-        if (original == null || original.length() == 0) {
-            return original;
-        }
-        return original.substring(0, 1).toUpperCase() + original.substring(1);
     }
 }

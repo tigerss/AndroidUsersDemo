@@ -1,15 +1,20 @@
 package com.demo.users;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +38,15 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     private User mUser;
 
+    private ScaleGestureDetector mScaleDetector;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.d(TAG, "onTouchEvent");
+        mScaleDetector.onTouchEvent(event);
+        return true;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +64,8 @@ public class UserDetailsActivity extends AppCompatActivity {
         refreshUserFields(mUser);
 
         loadUserAvatar();
+
+        mScaleDetector = new ScaleGestureDetector(this, new ScaleListener());
     }
 
     @Override
@@ -157,4 +173,27 @@ public class UserDetailsActivity extends AppCompatActivity {
             startActivity(intent);
         }
     };
+
+    private class ScaleListener
+            extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            Log.d(TAG, "onScale");
+//            mScaleFactor *= detector.getScaleFactor();
+//
+//            // Don't let the object get too small or too large.
+//            mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f));
+
+//            invalidate();
+
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+            int height = size.y;
+
+            mAvatarImageView.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+            return true;
+        }
+    }
 }
